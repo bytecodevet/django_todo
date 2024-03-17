@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial;
+        }
+        body {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .wrapper {
+            width: 400px;
+            height: 400px;
+            margin: 0 auto;
+            padding: 10px 20px;
+        }
+        .form {
+            width: 350px;
+            display: flex;
+            margin: 0 auto;
+        }
+        .form__input {
+            border-radius: 10px 0 0 10px;
+            border: 1px solid #ccc;
+            padding: 15px 10px;
+            padding-right: 20px;
+            width: 100%;
+            border-right: none;
+        }
+        .form__input:focus {
+            outline: none;
+            border-color: #c2c2c2;
+        }
+        .form__submit {
+            border: 1px solid #ccc;
+            border-radius: 0 10px 10px 0;
+            padding: 5px;
+            line-height: 0px;
+            cursor: pointer;
+            transition: all .15s ease-in;
+            font-size: 30px;
+            width: auto;
+        }
+        .form__submit:hover {
+            background-color: #c2c2c2;
+            color: #fff;
+        }
+        .todo_list {
+            width: 350px;
+            margin: 20px auto;
+            overflow-y: auto;
+            overflow-x: hidden;
+            max-height: 300px;
+            position: relative;
+        }
+        .todo_list::-webkit-scrollbar {
+            width: 5px;
+        }
+        .todo_list::-webkit-scrollbar-track {
+            background: #e2e2e2;
+        }
+        .todo_list::-webkit-scrollbar-thumb {
+            background-color: #b9b9b9;
+            border-radius: 20px;
+        }
+        .task {
+            /* background-color: #e2e2e2; */
+            display: flex;
+            justify-content: space-between;
+            width: 350px;
+            padding: 15px 10px;
+            border: 1px solid #e2e2e2;
+            box-sizing: border-box;
+            border-radius: 10px;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        .task__title {
+            font-family: monospace;
+            font-size: 20px;
+        }
+        .task__delete {
+            font-size: 20px;
+            color: rgb(255, 0, 0);
+        }
+        .task__delete:hover {
+            color: rgb(158, 51, 51);
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <form action="{% url 'create-todo' %}" class="form" method="POST">
+            <input type="text" placeholder="Enter todo" name="title" class="form__input">
+            <button class="form__submit" type="submit">
+                <i class='bx bx-plus-circle'></i>
+            </button>
+        </form>
+        <div class="todo_list">
+            {% for task in todo_list %}
+                <div class="task">
+                    <span class="task__title">{{ task }}</span>
+                    <a href="{% url 'delete-todo' task.pk %}" class="task__delete">
+                        <i class='bx bx-trash'></i>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
